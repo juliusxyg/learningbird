@@ -7,10 +7,13 @@
 //
 
 #include "AtlasResource.h"
-//初始化实例指针为空指针
-AtlasResource* instance = nullptr;
+
 //构造函数，什么都不干
-AtlasResource::AtlasResource(){}
+AtlasResource::AtlasResource(){
+    spriteFramesDictionary = cocos2d::CCDictionary::create();
+}
+
+AtlasResource* AtlasResource::instance = NULL;
 
 AtlasResource* AtlasResource::sharedResource()
 {
@@ -26,39 +29,33 @@ void AtlasResource::destoryResource()
     CC_SAFE_DELETE(instance);
 }
 
-void AtlasResource::loadImage(const char *filename)
+void AtlasResource::loadImage(const char *fileImage, const char* filename)
 {
-    atlasTexture = cocos2d::CCTextureCache::sharedTextureCache()->addImage(filename);
-}
-
-void AtlasResource::parseImage(const char *filename)
-{
-    char* data = NULL;
-    unsigned long fileSize = 0;
-    data = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(filename, "r", fileSize);
+    cocos2d::CCTexture2D *atlasTexture = cocos2d::CCTextureCache::sharedTextureCache()->addImage(fileImage);
     
-    int lineStart = 0, lineEnd = 0;
-    for(lineEnd=0; lineEnd<fileSize; lineEnd++)
+    cocos2d::CCString *fileData = cocos2d::CCString::createWithContentsOfFile(filename);
+    int pos = 0;
+    pos = fileData->m_sString.find_first_of("\n");
+    std::string line = fileData->m_sString.substr(0, pos);
+    fileData->m_sString = fileData->m_sString.substr(pos+1);
+    while (line != "")
     {
-        if(strcmp("\n", data[lineEnd]))
-        {
-            char* line = data.substr(lineStart, lineEnd);
-            char* name;
-            int width, height;
-            float startX, startY, endX, endY;
-            sscanf(line.c_str(), "%s %d %d %f %f %f %f %f",
+        char name[20];
+        int width, height;
+        float startX, startY, endX, endY;
+        sscanf(line.c_str(), "%s %d %d %f %f %f %f",
                    name, &width, &height, &startX, &startY, &endX, &endY);
-            
-            cocos2d::CCrect rect = CCRectMake(1024*startY, 1024*startY, width, height);
-            cocos2d::CCSpriteFrame* spriteFrame = cocos2d::CCSpriteFrame::createWithTexture(atlasTexture, rect);
-            this->_spriteFrames.insert(name, spriteFrame);
-            
-            lineStart = lineEnd+1;
-        }
+        cocos2d::CCSpriteFrame* spriteFrame = cocos2d::CCSpriteFrame::createWithTexture(atlasTexture, cocos2d::CCRect(1024*startX, 1024*startY, width, height));
+        
+        spriteFramesDictionary->setObject(spriteFrame, name);
+        
+        pos = fileData->m_sString.find_first_of("\n");
+        line = fileData->m_sString.substr(0, pos);
+        fileData->m_sString = fileData->m_sString.substr(pos+1);
     }
 }
 
 cocos2d::CCSpriteFrame* AtlasResource::getSpriteFrameByName(const char *name)
 {
-    return this->_spriteFrames.at(name);
+    return (cocos2d::CCSpriteFrame*)spriteFramesDictionary->objectForKey(name);
 }

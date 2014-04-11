@@ -36,11 +36,13 @@ bool LoadingScene::init()
     }
     
     //test
-    AtlasResource::sharedResource()->loadImage("atlas.png");
-    AtlasResource::sharedResource()->parseImage("atlas.txt");
-    
-    AtlasResource::sharedResource()->getSpriteFrameByName("bird1_0");
-    
+    AtlasResource::sharedResource()->loadImage("atlas.png", "atlas.txt");
+
+    cocos2d::CCSpriteFrame *birdFrame = AtlasResource::sharedResource()->getSpriteFrameByName("bird1_0");
+    CCLOG("get bird");
+    cocos2d::CCSprite *bird = cocos2d::CCSprite::createWithSpriteFrame(birdFrame);
+    bird->cocos2d::CCNode::setPosition(100, 100);
+    addChild(bird);
     return true;
 }
 

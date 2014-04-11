@@ -18,10 +18,8 @@ public:
     static AtlasResource* sharedResource();
     //销毁实例对象
     static void destoryResource();
-    //载入atlas图片，并生成texture2d对象
-    void loadImage(const char* filename);
-    //解析atlas texture2d 对象，裁剪出各个精灵需要的资源，并存入字典中
-    void parseImage(const char* filename);
+    //载入atlas图片，并生成texture2d对象, 解析atlas texture2d 对象，裁剪出各个精灵需要的资源，并存入字典中
+    void loadImage(const char* fileImage, const char* filename);
     //getter 获取字典中的精灵帧
     cocos2d::CCSpriteFrame* getSpriteFrameByName(const char* name);
     
@@ -29,7 +27,7 @@ protected:
     AtlasResource();
     
 private:
-    std::map<char*, cocos2d::CCSpriteFrame*> _spriteFrames;
+    cocos2d::CCDictionary *spriteFramesDictionary;
     
     static AtlasResource *instance;
     
