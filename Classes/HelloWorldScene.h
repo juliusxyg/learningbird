@@ -1,8 +1,6 @@
 #ifndef __HELLOWORLD_SCENE_H__
 #define __HELLOWORLD_SCENE_H__
 
-#define CC_ENABLE_BOX2D_INTEGRATION 1
-
 #include "cocos2d.h"
 //加载物理世界引擎
 #include "Box2D.h"
