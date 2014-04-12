@@ -35,19 +35,38 @@ bool LoadingScene::init()
         return false;
     }
     
-    //test
-    AtlasResource::sharedResource()->loadImage("atlas.png", "atlas.txt");
-
-    cocos2d::CCSpriteFrame *birdFrame = AtlasResource::sharedResource()->getSpriteFrameByName("bird1_0");
-    CCLOG("get bird");
-    cocos2d::CCSprite *bird = cocos2d::CCSprite::createWithSpriteFrame(birdFrame);
-    bird->cocos2d::CCNode::setPosition(100, 100);
-    addChild(bird);
+    
     return true;
+}
+
+void LoadingScene::onEnter()
+{
+    //加载背景图
+    backgroud = CCSprite::create("splash.png");
+    CCSize screentSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint screenOrigin = CCDirector::sharedDirector()->getVisibleOrigin();
+    
+    backgroud->setPosition(CCPoint(screenOrigin.x + screentSize.width/2, screenOrigin.y + screentSize.height/2));
+    addChild(backgroud);
+    
+    //加载atlas图片资源
+    CCTextureCache::sharedTextureCache()->addImageAsync("atlas.png", this, callfuncO_selector(LoadingScene::loadingCallback));
 }
 
 void LoadingScene::loadingCallback(cocos2d::CCObject *pSender)
 {
+    AtlasResource::sharedResource()->parseImage("atlas.txt", (CCTexture2D*)pSender);
     
+    //预加载音效
+    SimpleAudioEngine::sharedEngine()->preloadEffect("sfx_die.ogg");
+    SimpleAudioEngine::sharedEngine()->preloadEffect("sfx_hit.ogg");
+    SimpleAudioEngine::sharedEngine()->preloadEffect("sfx_point.ogg");
+    SimpleAudioEngine::sharedEngine()->preloadEffect("sfx_swooshing.ogg");
+    SimpleAudioEngine::sharedEngine()->preloadEffect("sfx_wing.ogg");
+    
+    //切换场景
+    CCScene *welcomeScene = WelcomeScene::scene();
+    CCTransitionScene *replaceScene = CCTransitionFade::create(1, welcomeScene);
+    CCDirector::sharedDirector()->replaceScene(replaceScene);
 }
 

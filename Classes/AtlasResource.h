@@ -11,6 +11,8 @@
 
 #include "cocos2d.h"
 
+using namespace cocos2d;
+
 class AtlasResource
 {
 public:
@@ -19,20 +21,18 @@ public:
     //销毁实例对象
     static void destoryResource();
     //载入atlas图片，并生成texture2d对象, 解析atlas texture2d 对象，裁剪出各个精灵需要的资源，并存入字典中
-    void loadImage(const char* fileImage, const char* filename);
+    void parseImage(const char* filename, CCTexture2D *atlasTexture);
     //getter 获取字典中的精灵帧
-    cocos2d::CCSpriteFrame* getSpriteFrameByName(const char* name);
+    CCSpriteFrame* getSpriteFrameByName(const char* name);
     
 protected:
     AtlasResource();
     
 private:
-    cocos2d::CCDictionary *spriteFramesDictionary;
+    CCDictionary *spriteFramesDictionary;
     
     static AtlasResource *instance;
-    
-    cocos2d::CCTexture2D *atlasTexture;
-    
+        
 };
 
 #endif /* defined(__flapunicon__AtlasResource__) */
