@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "AtlasResource.h"
+#include "BirdSprite.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -28,11 +29,15 @@ private:
     void addTitle();
     void addGround();
     void addBird();
+    void addStartButton();
+    void addCopyright();
     
     CCSize screenSize;
     CCSprite *ground_1;
     CCSprite *ground_2;
+    CCSprite *title;
     void scrollGround(float dt);
+    void startCallback(CCObject *pSender);
     
 };
 #endif /* defined(__flapunicon__WelcomeLayer__) */
