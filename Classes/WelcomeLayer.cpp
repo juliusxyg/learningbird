@@ -117,4 +117,10 @@ void WelcomeLayer::addBackground()
 void WelcomeLayer::startCallback(cocos2d::CCObject *pSender)
 {
     CCLog("tap start");
+    SimpleAudioEngine::sharedEngine()->playEffect("sfx_swooshing.ogg");
+    //切换场景
+    CCScene *gameScene = GameScene::scene();
+    CCTransitionScene *replaceScene = CCTransitionFade::create(1, gameScene);
+    CCDirector::sharedDirector()->replaceScene(replaceScene);
+    
 }

@@ -29,7 +29,6 @@ protected:
     AtlasResource();
     
 private:
-    CCDictionary *spriteFramesDictionary;
     
     static AtlasResource *instance;
         

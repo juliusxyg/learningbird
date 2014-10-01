@@ -8,10 +8,10 @@
 
 #include "AtlasResource.h"
 
+USING_NS_CC;
+
 //构造函数，什么都不干
-AtlasResource::AtlasResource(){
-    spriteFramesDictionary = cocos2d::CCDictionary::create();
-}
+AtlasResource::AtlasResource(){}
 
 AtlasResource* AtlasResource::instance = NULL;
 
@@ -45,7 +45,7 @@ void AtlasResource::parseImage(const char *filename, CCTexture2D *atlasTexture)
                    name, &width, &height, &startX, &startY, &endX, &endY);
         CCSpriteFrame* spriteFrame = CCSpriteFrame::createWithTexture(atlasTexture, CCRect(1024*startX, 1024*startY, width, height));
         
-        spriteFramesDictionary->setObject(spriteFrame, name);
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(spriteFrame, name);
         
         pos = fileData->m_sString.find_first_of("\n");
         line = fileData->m_sString.substr(0, pos);
@@ -53,7 +53,8 @@ void AtlasResource::parseImage(const char *filename, CCTexture2D *atlasTexture)
     }
 }
 
-cocos2d::CCSpriteFrame* AtlasResource::getSpriteFrameByName(const char *name)
+CCSpriteFrame* AtlasResource::getSpriteFrameByName(const char *name)
 {
-    return (CCSpriteFrame*)spriteFramesDictionary->objectForKey(name);
+    CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name);
+    return frame;
 }

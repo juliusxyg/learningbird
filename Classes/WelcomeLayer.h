@@ -13,6 +13,7 @@
 #include "SimpleAudioEngine.h"
 #include "AtlasResource.h"
 #include "BirdSprite.h"
+#include "GameScene.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
