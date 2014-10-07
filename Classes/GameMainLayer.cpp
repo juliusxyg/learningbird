@@ -134,7 +134,7 @@ void GameMainLayer::addPipe(float dt)
     b2BodyDef downBodyDef;
     downBodyDef.type = b2_kinematicBody;//不受重力影响，但是可移动的类型
     downBodyDef.position = b2Vec2(screenSize.width/PTM_RATIO+2, downPipeSize.height/2/PTM_RATIO+offset);//从屏幕右边出来
-    downBodyDef.linearVelocity = b2Vec2(-4, 0);//pipe往左移动的速度
+    downBodyDef.linearVelocity = b2Vec2(-200/PTM_RATIO, 0);//pipe往左移动的速度=地板移动的速度
     downBodyDef.userData = downPipe;
     b2Body* downPipeBody = world->CreateBody(&downBodyDef);
     //夹具
@@ -157,7 +157,7 @@ void GameMainLayer::addPipe(float dt)
     b2BodyDef upBodyDef;
     upBodyDef.type = b2_kinematicBody;//不受重力影响，但是可移动的类型
     upBodyDef.position = b2Vec2(screenSize.width/PTM_RATIO+2, downPipeSize.height/PTM_RATIO+offset+2+upPipeSize.height/2/PTM_RATIO);//从屏幕右边出来, up pipe比down pipe高出2米
-    upBodyDef.linearVelocity = b2Vec2(-4, 0);//pipe往左移动的速度
+    upBodyDef.linearVelocity = b2Vec2(-200/PTM_RATIO, 0);//pipe往左移动的速度
     upBodyDef.userData = upPipe;
     b2Body* upPipeBody = world->CreateBody(&upBodyDef);
     //夹具
