@@ -39,8 +39,8 @@ bool GameScene::init()
     //载入背景层，核心层，状态层
     GameBackgroundLayer *background = GameBackgroundLayer::create();
     addChild(background);
-    //GameMainLayer *mainlayer = GameMainLayer::create();
-    //addChild(mainlayer);
+    GameMainLayer *mainlayer = GameMainLayer::create();
+    addChild(mainlayer);
     //GameStatusLayer *statuslayer = GameStatusLayer::create();
     //addChild(statuslayer);
     

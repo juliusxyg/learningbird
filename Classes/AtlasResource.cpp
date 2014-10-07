@@ -46,6 +46,7 @@ void AtlasResource::parseImage(const char *filename, CCTexture2D *atlasTexture)
         CCSpriteFrame* spriteFrame = CCSpriteFrame::createWithTexture(atlasTexture, CCRect(1024*startX, 1024*startY, width, height));
         
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFrame(spriteFrame, name);
+        CCLog("%s",name);
         
         pos = fileData->m_sString.find_first_of("\n");
         line = fileData->m_sString.substr(0, pos);

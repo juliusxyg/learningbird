@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "GameBackgroundLayer.h"
+#include "GameMainLayer.h"
 
 using namespace cocos2d;
 
